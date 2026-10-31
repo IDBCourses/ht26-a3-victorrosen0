@@ -26,11 +26,11 @@ import { createShape } from "./shape.js";
 // ---------- Settings ----------
 // Settings variables should contain all of the "fixed" parts of your programs
 // For example: which notes you can play, how fast things move, the tempo.
-const note = "E4"; // the note played when the pointer goes down
-const note2 = "A4";
+const note = "A4"; // the note played when the pointer goes down
+const note2 = "E4";
 const note3 = "C4"
 
-let shape;
+let shape1;
 let shape2;
 let shape3;
 
@@ -66,46 +66,46 @@ function pointerDown(event) {
 function pointerDown1(event) {
   console.log("shape1 clicked");
   synth.triggerAttack(note);
- /* shape1.setSize(250);
-  shape1.setColour(175,90, 30);
-  shape1.setPosition(0.5, 0.2);*/
+  shape1.setSize(300);
+  shape1.setColour(200, 80, 50);
+  shape1.setPosition(0.1, 0.2);
 }
 
 function pointerDown2(event) {
   console.log("shape2 clicked");
   synth.triggerAttack(note2);
-  shape2.setSize(250);
-  shape2.setColour(350, 90, 70);
-  shape2.setPosition(0.2, 0.2);
+  shape2.setSize(300);
+  shape2.setColour(200, 80, 50);
+  shape2.setPosition(0.4, 0.2);
 }
 
 function pointerDown3(event) {
   console.log("shape3 clicked");
   synth.triggerAttack(note3);
-  shape3.setSize(250);
-  shape3.setColour(50, 90, 70);
+  shape3.setSize(300);
+  shape3.setColour(200, 80, 50);
   shape3.setPosition(0.7, 0.2);
 }
 
 function pointerUp1(event) {
   synth.triggerRelease()
   shape1.setSize(200);
-  shape1.setColour(200, 80, 50);
-  shape1.setPosition(0.5, 0.2);
+  shape1.setColour(175,90, 30);
+  shape1.setPosition(0.1, 0.2);
 
 }
 
 function pointerUp2(event) {
   synth.triggerRelease()
   shape2.setSize(200);
-  shape2.setColour(200, 80, 50);
-  shape2.setPosition(0.2, 0.2);
+  shape2.setColour(300, 90, 70);
+  shape2.setPosition(0.4, 0.2);
 }
 
 function pointerUp3(event) {
   synth.triggerRelease()
   shape3.setSize(200);
-  shape3.setColour(200, 80, 50);
+  shape3.setColour(50, 90, 70);
   shape3.setPosition(0.7, 0.2);
 }
 
@@ -116,19 +116,19 @@ function setup() {
   //use(); // start the use loop
 
   // Example: a shape near the middle of the window. Replace it with your own.
-  /*const*/ shape = createShape("shape");
+  /*const*/ shape1 = createShape("shape1");
   shape1.setSize(200);
-  shape1.setColour(200, 80, 50); // hue 0 to 360, saturation, lightness
-  shape1.setPosition(0.5, 0.2);
+  shape1.setColour(175,90, 30); // hue 0 to 360, saturation, lightness
+  shape1.setPosition(0.1, 0.2);
 
   /*const*/ shape2 = createShape("shape2");
   shape2.setSize(200);
   shape2.setColour(300, 90, 70); // hue 0 to 360, saturation, lightness
-  shape2.setPosition(0.2, 0.2);
+  shape2.setPosition(0.4, 0.2);
 
   /*const */shape3 = createShape("shape3");
   shape3.setSize(200);
-  shape3.setColour(100, 50, 30); // hue 0 to 360, saturation, lightness
+  shape3.setColour(50, 90, 70); // hue 0 to 360, saturation, lightness
   shape3.setPosition(0.7, 0.2);
 
   // Put your event listener code here
