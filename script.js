@@ -40,7 +40,12 @@ let shape3;
 
 // ---------- Sound ----------
 // Make the instruments and plug them into the speakers.
-const synth = new Tone./*Poly*/Synth(/*Tone.Synth*/).toDestination(); // can play several notes at once
+const synths = [
+  new Tone.Synth().toDestination(),
+  new Tone.Synth().toDestination(),
+  new Tone.Synth().toDestination(),
+];
+//const synth = new Tone./*Poly*/Synth(/*Tone.Synth*/).toDestination(); // can play several notes at once
 
 // ---------- Update ----------
 // Update the state. This is called every 100ms.
@@ -65,7 +70,7 @@ function pointerDown(event) {
 
 function pointerDown1(event) {
   console.log("shape1 clicked");
-  synth.triggerAttack(note);
+  synths[0].triggerAttack(note);
   shape1.setSize(300);
   shape1.setColour(200, 80, 50);
   shape1.setPosition(0.1, 0.2);
@@ -73,7 +78,7 @@ function pointerDown1(event) {
 
 function pointerDown2(event) {
   console.log("shape2 clicked");
-  synth.triggerAttack(note2);
+  synths[1].triggerAttack(note2);
   shape2.setSize(300);
   shape2.setColour(200, 80, 50);
   shape2.setPosition(0.4, 0.2);
@@ -81,14 +86,14 @@ function pointerDown2(event) {
 
 function pointerDown3(event) {
   console.log("shape3 clicked");
-  synth.triggerAttack(note3);
+  synths[2].triggerAttack(note3);
   shape3.setSize(300);
   shape3.setColour(200, 80, 50);
   shape3.setPosition(0.7, 0.2);
 }
 
 function pointerUp1(event) {
-  synth.triggerRelease()
+  synths[0].triggerRelease()
   shape1.setSize(200);
   shape1.setColour(175,90, 30);
   shape1.setPosition(0.1, 0.2);
@@ -96,14 +101,14 @@ function pointerUp1(event) {
 }
 
 function pointerUp2(event) {
-  synth.triggerRelease()
+  synths[1].triggerRelease()
   shape2.setSize(200);
   shape2.setColour(300, 90, 70);
   shape2.setPosition(0.4, 0.2);
 }
 
 function pointerUp3(event) {
-  synth.triggerRelease()
+  synths[2].triggerRelease()
   shape3.setSize(200);
   shape3.setColour(50, 90, 70);
   shape3.setPosition(0.7, 0.2);
