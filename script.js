@@ -35,6 +35,12 @@ const positionsX = [0.1, 0.4, 0.7];
 // For example: where the pointer is, how fast it's moving, or whether a drone is on.
 let shapes = [];
 let active = -1; //Which shape is pressed and -1 = none.
+let lastX = 0;
+let lastY = 0;
+let lastTime = 0;
+let speeds = [];
+let average = 0;  //Average speed, screens/second.
+let amount = 0;  //Average speed as a number 0-1.
 
 // ---------- Sound ----------
 // Make the instruments and plug them into the speakers.
@@ -48,6 +54,20 @@ const synths = [
 // ---------- Update ----------
 // Update the state. This is called every 100ms.
 function update() {
+  let total = 0;
+  for (let i = 0; i < speeds.length; i++) {
+    total = total + speeds[i];
+  }
+
+  average = 0;
+  if (speeds.lenght > 0) {
+    average = total / speeds.length;
+  }
+
+  amount = Math.min(average / 3, 1);  //0-1 where 2 or more screens/second is max.
+
+  console.log(average.toFixed(3));
+
   setTimeout(update, 100); // call update() again in 100 milliseconds
 }
 
@@ -64,6 +84,12 @@ Tone.start();
 shapes[i].element.setPointerCapture(event.pointerId);  //To keep getting events outside the shape
 
 active = i;
+lastX = event.clientX / window.innerWidth;
+lastY = event.clientY / window.innerHeight;
+lastTime = Date.now();
+speeds = [];
+average = 0;
+amount = 0;
 synths[i].triggerAttack(note[i]);
 
 shapes[i].setSize(300);
@@ -83,6 +109,33 @@ shapes[i].setColour(startColours[i][0], startColours[i][1], startColours[i][2]);
 shapes[i].setPosition(positionsX[i], 0.2);
 }
 
+function pointerMove(event) {
+  if (active === -1) {
+    return;
+  }
+
+  let normX = event.clientX / window.innerWidth;
+  let normY = event.clientY / window.innerHeight;
+  let now = Date.now();
+  let distance = Math.hypot(normX - lastX, normY - lastY); // screens
+  let seconds = (now - lastTime) / 1000;
+  if (seconds === 0) {
+    return; // no time has gone, therefore no speed.
+  }
+  let speed = distance / seconds; // screens/second
+  lastX = normX;
+  lastY = normY;
+  lastTime = now;
+
+  speeds.push(speed);
+  setTimeout(forgetOldest, 500);
+  console.log(speeds.length);
+}
+
+function forgetOldest(event) {
+  speeds.shift();
+}
+
 function pointerDown1(event) { shapePress(0, event); }
 function pointerDown2(event) { shapePress(1, event); }
 function pointerDown3(event) { shapePress(2, event); }
@@ -97,6 +150,8 @@ function pointerUp3() { shapeRelease(2); }
 // ---------- Setup ----------
 // Setup is run once, at the start of the program. It sets everything up for us!
 function setup() {
+  update()
+
   for (let i = 0; i < 3; i++) {
     shapes[i] = createShape("shape" + (i + 1));
     shapes[i].setSize(200);
@@ -106,6 +161,7 @@ function setup() {
 
   // Put your event listener code here
  // window.addEventListener("pointerdown", pointerDown);
+window.addEventListener("pointermove", pointerMove);  //So the pointer can be anywhere on the screen when pressed down on a shape.
 
   shapes[0].element.addEventListener("pointerdown", pointerDown1);
   shapes[0].element.addEventListener("pointerup", pointerUp1);
