@@ -26,17 +26,14 @@ import { createShape } from "./shape.js";
 // ---------- Settings ----------
 // Settings variables should contain all of the "fixed" parts of your programs
 // For example: which notes you can play, how fast things move, the tempo.
-const note = "A4"; // the note played when the pointer goes down
-const note2 = "E4";
-const note3 = "C4"
-
-let shape1;
-let shape2;
-let shape3;
+const note = ["A4", "E4", "C4"]; // the note played when the pointer goes down
+const startColour = [[175, 90, 30], [300, 90, 70], [50, 90, 70]];
+const positionsX = [0.1, 0.4, 0.7];
 
 // ---------- State ----------
 // State variables are the parts of your program that change over time.
 // For example: where the pointer is, how fast it's moving, or whether a drone is on.
+let shapes = [];
 
 // ---------- Sound ----------
 // Make the instruments and plug them into the speakers.
@@ -70,48 +67,48 @@ function pointerDown(event) {
 
 function pointerDown1(event) {
   console.log("shape1 clicked");
-  synths[0].triggerAttack(note);
-  shape1.setSize(300);
-  shape1.setColour(200, 80, 50);
-  shape1.setPosition(0.1, 0.2);
+  synths[0].triggerAttack(note[0]);
+  shapes[0].setSize(300);
+  shapes[0].setColour(200, 80, 50);
+  shapes[0].setPosition(0.1, 0.2);
 }
 
 function pointerDown2(event) {
   console.log("shape2 clicked");
-  synths[1].triggerAttack(note2);
-  shape2.setSize(300);
-  shape2.setColour(200, 80, 50);
-  shape2.setPosition(0.4, 0.2);
+  synths[1].triggerAttack(note[1]);
+  shapes[1].setSize(300);
+  shapes[1].setColour(200, 80, 50);
+  shapes[1].setPosition(0.4, 0.2);
 }
 
 function pointerDown3(event) {
   console.log("shape3 clicked");
-  synths[2].triggerAttack(note3);
-  shape3.setSize(300);
-  shape3.setColour(200, 80, 50);
-  shape3.setPosition(0.7, 0.2);
+  synths[2].triggerAttack(note[2]);
+  shapes[2].setSize(300);
+  shapes[2].setColour(200, 80, 50);
+  shapes[2].setPosition(0.7, 0.2);
 }
 
 function pointerUp1(event) {
   synths[0].triggerRelease()
-  shape1.setSize(200);
-  shape1.setColour(175,90, 30);
-  shape1.setPosition(0.1, 0.2);
+  shapes[0].setSize(200);
+  shapes[0].setColour(175,90, 30);
+  shapes[0].setPosition(0.1, 0.2);
 
 }
 
 function pointerUp2(event) {
   synths[1].triggerRelease()
-  shape2.setSize(200);
-  shape2.setColour(300, 90, 70);
-  shape2.setPosition(0.4, 0.2);
+  shapes[1].setSize(200);
+  shapes[1].setColour(300, 90, 70);
+  shapes[1].setPosition(0.4, 0.2);
 }
 
 function pointerUp3(event) {
   synths[2].triggerRelease()
-  shape3.setSize(200);
-  shape3.setColour(50, 90, 70);
-  shape3.setPosition(0.7, 0.2);
+  shapes[2].setSize(200);
+  shapes[2].setColour(50, 90, 70);
+  shapes[2].setPosition(0.7, 0.2);
 }
 
 // ---------- Setup ----------
@@ -120,37 +117,27 @@ function setup() {
   //update(); // start the update loop
   //use(); // start the use loop
 
-  // Example: a shape near the middle of the window. Replace it with your own.
-  /*const*/ shape1 = createShape("shape1");
-  shape1.setSize(200);
-  shape1.setColour(175,90, 30); // hue 0 to 360, saturation, lightness
-  shape1.setPosition(0.1, 0.2);
-
-  /*const*/ shape2 = createShape("shape2");
-  shape2.setSize(200);
-  shape2.setColour(300, 90, 70); // hue 0 to 360, saturation, lightness
-  shape2.setPosition(0.4, 0.2);
-
-  /*const */shape3 = createShape("shape3");
-  shape3.setSize(200);
-  shape3.setColour(50, 90, 70); // hue 0 to 360, saturation, lightness
-  shape3.setPosition(0.7, 0.2);
+  for (let i = 0; i < 3; i++) {
+    shapes[i] = createShape("shape" + (i + 1));
+    shapes[i].setSize(200);
+    shapes[i].setColour(startColour[i][0], startColour[i][1], startColour[i][2]);
+    shapes[i].setPosition(positionsX[i], 0.2);
+  }
 
   // Put your event listener code here
   window.addEventListener("pointerdown", pointerDown);
 
-  shape1.element.addEventListener("pointerdown", pointerDown1);
-  shape1.element.addEventListener("pointerup", pointerUp1);
-  //shape1.element.addEventListener("pointerenter", pointerEnter);
-  shape1.element.addEventListener("pointerleave", pointerUp1);
+  shapes[0].element.addEventListener("pointerdown", pointerDown1);
+  shapes[0].element.addEventListener("pointerup", pointerUp1);
+  shapes[0].element.addEventListener("pointerleave", pointerUp1);
 
-  shape2.element.addEventListener("pointerdown", pointerDown2);
-  shape2.element.addEventListener("pointerup", pointerUp2);
-  shape2.element.addEventListener("pointerleave", pointerUp2);
+  shapes[1].element.addEventListener("pointerdown", pointerDown2);
+  shapes[1].element.addEventListener("pointerup", pointerUp2);
+  shapes[1].element.addEventListener("pointerleave", pointerUp2);
 
-  shape3.element.addEventListener("pointerdown", pointerDown3);
-  shape3.element.addEventListener("pointerup", pointerUp3);
-  shape3.element.addEventListener("pointerleave", pointerUp3);
+  shapes[2].element.addEventListener("pointerdown", pointerDown3);
+  shapes[2].element.addEventListener("pointerup", pointerUp3);
+  shapes[2].element.addEventListener("pointerleave", pointerUp3);
 }
 
 setup(); // Always remember to call setup()!
