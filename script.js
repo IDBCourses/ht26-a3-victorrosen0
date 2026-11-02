@@ -26,7 +26,13 @@ import { createShape } from "./shape.js";
 // ---------- Settings ----------
 // Settings variables should contain all of the "fixed" parts of your programs
 // For example: which notes you can play, how fast things move, the tempo.
-const note = "C4"; // the note played when the pointer goes down
+const note = "A4"; // the note played when the pointer goes down
+const note2 = "E4";
+const note3 = "C4"
+
+let shape1;
+let shape2;
+let shape3;
 
 // ---------- State ----------
 // State variables are the parts of your program that change over time.
@@ -34,7 +40,12 @@ const note = "C4"; // the note played when the pointer goes down
 
 // ---------- Sound ----------
 // Make the instruments and plug them into the speakers.
-const synth = new Tone.PolySynth(Tone.Synth).toDestination(); // can play several notes at once
+const synths = [
+  new Tone.Synth().toDestination(),
+  new Tone.Synth().toDestination(),
+  new Tone.Synth().toDestination(),
+];
+//const synth = new Tone./*Poly*/Synth(/*Tone.Synth*/).toDestination(); // can play several notes at once
 
 // ---------- Update ----------
 // Update the state. This is called every 100ms.
@@ -54,21 +65,92 @@ function pointerDown(event) {
   Tone.start(); // browsers only allow sound after the player has pressed something
 
   console.log("Pointer down at", event.clientX, event.clientY);
-  synth.triggerAttackRelease(note, "8n"); // play the note for an eighth note
+ // synth.triggerAttackRelease(note, "8n"); // play the note for an eighth note
+}
+
+function pointerDown1(event) {
+  console.log("shape1 clicked");
+  synths[0].triggerAttack(note);
+  shape1.setSize(300);
+  shape1.setColour(200, 80, 50);
+  shape1.setPosition(0.1, 0.2);
+}
+
+function pointerDown2(event) {
+  console.log("shape2 clicked");
+  synths[1].triggerAttack(note2);
+  shape2.setSize(300);
+  shape2.setColour(200, 80, 50);
+  shape2.setPosition(0.4, 0.2);
+}
+
+function pointerDown3(event) {
+  console.log("shape3 clicked");
+  synths[2].triggerAttack(note3);
+  shape3.setSize(300);
+  shape3.setColour(200, 80, 50);
+  shape3.setPosition(0.7, 0.2);
+}
+
+function pointerUp1(event) {
+  synths[0].triggerRelease()
+  shape1.setSize(200);
+  shape1.setColour(175,90, 30);
+  shape1.setPosition(0.1, 0.2);
+
+}
+
+function pointerUp2(event) {
+  synths[1].triggerRelease()
+  shape2.setSize(200);
+  shape2.setColour(300, 90, 70);
+  shape2.setPosition(0.4, 0.2);
+}
+
+function pointerUp3(event) {
+  synths[2].triggerRelease()
+  shape3.setSize(200);
+  shape3.setColour(50, 90, 70);
+  shape3.setPosition(0.7, 0.2);
 }
 
 // ---------- Setup ----------
 // Setup is run once, at the start of the program. It sets everything up for us!
 function setup() {
-  update(); // start the update loop
-  use(); // start the use loop
+  //update(); // start the update loop
+  //use(); // start the use loop
 
   // Example: a shape near the middle of the window. Replace it with your own.
-  const example = createShape("example");
-  example.setPosition(0.5, 0.5);
+  /*const*/ shape1 = createShape("shape1");
+  shape1.setSize(200);
+  shape1.setColour(175,90, 30); // hue 0 to 360, saturation, lightness
+  shape1.setPosition(0.1, 0.2);
+
+  /*const*/ shape2 = createShape("shape2");
+  shape2.setSize(200);
+  shape2.setColour(300, 90, 70); // hue 0 to 360, saturation, lightness
+  shape2.setPosition(0.4, 0.2);
+
+  /*const */shape3 = createShape("shape3");
+  shape3.setSize(200);
+  shape3.setColour(50, 90, 70); // hue 0 to 360, saturation, lightness
+  shape3.setPosition(0.7, 0.2);
 
   // Put your event listener code here
   window.addEventListener("pointerdown", pointerDown);
+
+  shape1.element.addEventListener("pointerdown", pointerDown1);
+  shape1.element.addEventListener("pointerup", pointerUp1);
+  //shape1.element.addEventListener("pointerenter", pointerEnter);
+  shape1.element.addEventListener("pointerleave", pointerUp1);
+
+  shape2.element.addEventListener("pointerdown", pointerDown2);
+  shape2.element.addEventListener("pointerup", pointerUp2);
+  shape2.element.addEventListener("pointerleave", pointerUp2);
+
+  shape3.element.addEventListener("pointerdown", pointerDown3);
+  shape3.element.addEventListener("pointerup", pointerUp3);
+  shape3.element.addEventListener("pointerleave", pointerUp3);
 }
 
 setup(); // Always remember to call setup()!
