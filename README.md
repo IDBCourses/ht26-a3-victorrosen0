@@ -1,19 +1,30 @@
 # My instrument
 
-**Play it here:** <!-- Paste your GitHub Pages link here, e.g. https://idbcourses.github.io/your-repo-name/ -->
+**Play it here:** <!-- Paste your GitHub Pages link here, e.g. https://idbcourses.github.io/your-repo-name/ --> https://idbcourses.github.io/ht26-a3-victorrosen0/
 
 **Name:** <!-- Your name and MAU ID -->
+Victor Pesciatini Rosén, an5168
 
 <!-- One or two sentences: what kind of instrument is it, and what is it like to play? -->
-
+It's an instument that is played with the point and by pressing it down on one of three shapes. The sound is changed by keeping the pointer pressed down and moving it at different speeds to change volume, pitch or octave depending on the shape.
 ## How to play
 
 <!-- Fill in the table with a row for everything the player can do with the pointer: clicking, moving slowly or fast, moving in circles, holding still... Say what happens to the sound and to the shapes. If you added keys, give them rows too. -->
 
-| When you...  | The sound...                         | The shapes... |
-| ------------ | ------------------------------------ | ------------- |
-| Click or tap | Plays a C4 (the example: replace it) | Nothing yet   |
-|              |                                      |               |
+| When you...                       | The sound...                   | The shapes...                                  |
+| --------------------------------- | ------------------------------ |-------------------------------------------------
+| Press and hold the left shape     | Starts a held A4, almost silent | The shape gets bigger and turns blue |
+| ...and move faster                | Gets louder, and is at full volume from about 2 screens per second | The shape grows (up to 400 px) and its colour shifts from blue towards pink  |
+| Press and hold the middle shape   | Starts a held E4 | The shape gets bigger and turns blue|
+| ...and move faster                | The pitch bends upwards, about 3 semitones for every screen per second | Same as the left shape |
+|Press and hold the right shape| Starts a held C, in the lowest octave when you are still|The shape gets bigger and turns blue|
+| ...and move faster                | The note jumps up through the octaves, from octave 2 to octave 5| Same as the left shape|
+| Move slowly| A small change: quiet, slightly bent or a low octave| The shape stays close to its smallest pressed size and stays blue|
+| Move in circles| Works like any other movement: only the speed matters, not the direction| Same as when moving at that speed|
+| Hold still, or stop dead after a fast movement       | Within half a second it falls back to its starting state             | The shape shrinks back to its smallest pressed size (250 px) and turns blue again |
+| Move outside the shape while holding  | The note keeps playing   | The shape stays pressed and keeps reacting to your speed |
+| Release the pointer               | The note stops   | The shape goes back to its original size and colour |
+| Move the pointer without pressing a shape        | Nothing
 
 <!-- Anything else a player needs to know: how to get started, a good thing to try first. -->
 
